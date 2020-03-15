@@ -28,29 +28,6 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-
-        Author tolkien = new Author("JRR", " Tolkien");
-        Book lordOfTheRingsSaga = new Book("Lord of The Rings", " 123456");
-        tolkien.getBooks().add(lordOfTheRingsSaga);
-        lordOfTheRingsSaga.getAuthors().add(tolkien);
-
-        authorRepository.save(tolkien);
-        bookRepository.save(lordOfTheRingsSaga);
-
-
-        Author sapkowski = new Author("Andrzej", "Sapkowski");
-        Book witcherSaga = new Book("Witcher", "654321");
-        sapkowski.getBooks().add(witcherSaga);
-        witcherSaga.getAuthors().add(sapkowski);
-
-
-        authorRepository.save(sapkowski);
-        bookRepository.save(witcherSaga);
-
-        System.out.println("Started in Bootstrap");
-        System.out.println("Number of books: " + bookRepository.count());
-
-
         Publisher publisher1 = new Publisher();
         publisher1.setName("ABC Publishing");
         publisher1.setCity("Warsaw");
@@ -58,6 +35,40 @@ public class BootstrapData implements CommandLineRunner {
 
         publisherRepository.save(publisher1);
         System.out.println("Publisher Count: " + publisherRepository.count());
+
+
+        Author tolkien = new Author("JRR", " Tolkien");
+        Book lordOfTheRingsSaga = new Book("Lord of The Rings", " 123456");
+
+        tolkien.getBooks().add(lordOfTheRingsSaga);
+        lordOfTheRingsSaga.getAuthors().add(tolkien);
+        lordOfTheRingsSaga.setPublisher(publisher1);
+        publisher1.getBooks().add(lordOfTheRingsSaga);
+
+        authorRepository.save(tolkien);
+        bookRepository.save(lordOfTheRingsSaga);
+        publisherRepository.save(publisher1);
+
+
+        Author sapkowski = new Author("Andrzej", "Sapkowski");
+        Book witcherSaga = new Book("Witcher", "654321");
+
+        sapkowski.getBooks().add(witcherSaga);
+        witcherSaga.getAuthors().add(sapkowski);
+        witcherSaga.setPublisher(publisher1);
+        publisher1.getBooks().add(witcherSaga);
+
+
+        authorRepository.save(sapkowski);
+        bookRepository.save(witcherSaga);
+        publisherRepository.save(publisher1);
+
+        System.out.println("Started in Bootstrap");
+        System.out.println("Number of books: " + bookRepository.count());
+        System.out.println("Publisher number of books: " + publisher1.getBooks().size());
+
+
+
 
     }
 
